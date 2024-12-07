@@ -1,8 +1,10 @@
 package interfaces
 
 import (
+	"bytes"
 	"fmt"
 	"math"
+	"strconv"
 )
 
 type Abser interface {
@@ -137,7 +139,31 @@ func printInterface() {
 	do(21)
 	do("hello")
 	do(true)
+	/*
+		Stringers
+		One of the most ubiquitous interfaces is Stringer defined by the fmt package.
+		type Stringer interface {
+		    String() string
+		}
+		A Stringer is a type that can describe itself as a string. The fmt package (and many others) look for this interface to print values.
+	*/
+	pa := Person{"Arthur Dent", 42}
+	pz := Person{"Zaphod Beeblebrox", 9001}
+	fmt.Println(pa, pz)
+	/*
+		Exercise: Stringers
+		Make the IPAddr type implement fmt.Stringer to print the address as a dotted quad.
+		For instance, IPAddr{1, 2, 3, 4} should print as "1.2.3.4".
+	*/
+	hosts := map[string]IPAddr{
+		"loopback":  {127, 0, 0, 1},
+		"googleDNS": {8, 8, 8, 8},
+	}
+	for name, ip := range hosts {
+		fmt.Printf("%v: %v\n", name, ip)
+	}
 }
+
 func (t T) Ms() {
 	fmt.Println(t.S)
 }
@@ -189,4 +215,31 @@ func do(i interface{}) {
 	default:
 		fmt.Printf("I don't know about type %T!\n", v)
 	}
+}
+
+// Stringers / аналог переобределения метода toString() для класса в Java
+
+type Person struct {
+	Name string
+	Age  int
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("%v (%v years)", p.Name, p.Age)
+}
+
+type IPAddr [4]byte
+
+func (p IPAddr) String() string {
+	bstr := bytes.Buffer{}
+	for i, b := range p {
+
+		if i == len(p)-1 {
+			bstr.WriteString(strconv.Itoa(int(b)))
+
+		} else {
+			bstr.WriteString(strconv.Itoa(int(b)) + ".")
+		}
+	}
+	return bstr.String()
 }
