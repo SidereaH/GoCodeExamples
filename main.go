@@ -1,6 +1,7 @@
 package main
 
 import (
+	"concurrency"
 	"flowcontrlstate"
 	"interfaces"
 	"methods"
@@ -20,4 +21,5 @@ func main() {
 	methods.Main()
 	//interfaces
 	interfaces.Main()
+	concurrency.Main()
 }

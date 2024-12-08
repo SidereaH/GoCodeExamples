@@ -1,6 +1,7 @@
 module main
 
 replace (
+	concurrency => ./concurrency
 	flowcontrlstate => ./basics/flowcontrlstate/
 	interfaces => ./interfaces
 	methods => ./methods
@@ -18,4 +19,7 @@ require (
 	types v0.0.0-00010101000000-000000000000
 )
 
-require golang.org/x/tour v0.1.0 // indirect
+require (
+	concurrency v0.0.0-00010101000000-000000000000 // indirect
+	golang.org/x/tour v0.1.0 // indirect
+)

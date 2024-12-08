@@ -41,7 +41,7 @@ func (rot rot13Reader) Read(b []byte) (int, error){
 		}
 		return len(b), nil
 	}
-	return 0, nil
+	return 0, io.EOF
 }
 
 
